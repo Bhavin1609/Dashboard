@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form</title>
+  <link rel="stylesheet" href="stylesheet.css">
+</head>
+
+<body>
+  <div class="container">
+    <h2>Registration Form</h2>
+    <form id="registerForm">
+      <div class="firstname">
+      <label for="fname">First Name</label>
+      <input type="text" id="firstname" name="firstname">
+      <span id="error-firstname" class="error"></span>
+      </div>
+
+      <div class="lastname">
+      <label for="lname">Last Name</label>
+      <input type="text" id="lastname" name="lastname">
+      <span id="error-lastname" class="error"></span>
+      </div>
+
+      <div class="mail">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email">
+      <span id="error-email" class="error"></span>
+      </div>
+
+      <div class="pass">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password">
+      <span id="error-password" class="error"></span>
+      </div>
+
+      <div class="Number">
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" name="phone" placeholder="+1234567890">
+      <span id="error-phone" class="error"></span>
+      </div>
+
+
+      <div class="gender">
+        <label>Gender</label>
+        <input type="radio" id="male" name="gender" value="male"> <label for="male"
+          style="display: inline;">Male</label>
+        <input type="radio" id="female" name="gender" value="female"> <label for="female"
+          style="display: inline;">Female</label>
+        <input type="radio" id="other" name="gender" value="other"> <label for="other"
+          style="display: inline;">Other</label>
+      </div>
+
+      <div class="dateofbirth">
+      <label for="dob">Date of Birth</label>
+      <input type="date" id="dob" name="dob">
+      <span id="error-dob" class="error"></span>
+      </div>
+
+      <div class="add">
+      <label for="address">Address</label>
+      <textarea id="address" name="address" rows="3"></textarea>
+      <span id="error-address" class="error"></span>
+      </div>
+
+      <div class="coun">
+      <label for="country">Country</label>
+      <select id="country" name="country">
+        <option value="">Select Country</option>
+        <option value="usa">United States</option>
+        <option value="uk">United Kingdom</option>
+        <option value="india">India</option>
+        <option value="canada">Canada</option>
+        <option value="australia">Australia</option>
+      </select>
+      <span id="error-country" class="error"></span>
+      </div>
+
+      <div class="checkbox">
+        <input type="checkbox" id="terms" name="terms">
+        <label for="terms" style="display: inline;">I agree to the <a href="#">Terms and Conditions</a></label>
+      </div>
+
+      <button id="btn-submit">
+        Submit
+      </button>
+    </form>
+  </div>
+  <script src="script.js"></script>
+</body>
+
+</html>

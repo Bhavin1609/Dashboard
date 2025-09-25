@@ -1,0 +1,66 @@
+body {
+  font-family: 'Courier New', Courier, monospace;
+  background-color: rgb(202, 250, 234);
+}
+
+.container {
+  max-width: 290px;
+  background: white;
+  padding: 30px;
+  margin: 50px auto;
+  height: 400px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+
+label {
+  /* display: block; */
+  color: black;
+  margin-bottom: 1px;
+  font-weight: bolder;
+}
+
+input[type="email"],
+input[type="password"]{
+  width: 85%;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  transition: border 0.3s;
+}
+
+.error {
+  color: red;
+  display: block;
+  font-size: 12px;
+  margin-bottom: 10px;
+  margin-top: 0px;
+}
+
+.btn{
+  width: 78%;
+  border: none;
+  background-color: #f54e77;
+  padding: 12px;
+  margin-left: 30px;
+  color: white;
+  border-radius: 5px;
+}
+.emailcontainer{
+  margin-left: 30px;
+}
+.passwordcontainer{
+  margin-left: 30px;
+}
+.cnfpass{
+  margin-left: 30px;
+}
+.head{
+  text-align: center;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}

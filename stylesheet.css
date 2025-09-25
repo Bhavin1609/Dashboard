@@ -1,0 +1,105 @@
+body {
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.container {
+  max-width: 500px;
+  background: white;
+  padding: 30px;
+  margin: 50px auto;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: black;
+  text-transform: uppercase;
+}
+
+label {
+  display: block;
+  color: black;
+  margin-bottom: 1px;
+  font-weight: bolder;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="date"],
+textarea,
+select {
+  width: 100%;
+  padding: 10px;
+  /* margin-bottom: 15px; */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type="radio"] {
+  margin-right: 10px;
+}
+
+.gender {
+  margin-bottom: 15px;
+}
+
+.checkbox {
+  margin-bottom: 20px;
+}
+
+#btn-submit {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+}
+
+input[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+  margin-bottom: 15px;
+}
+
+.firstname{
+  margin-bottom: 20px;
+}
+.pass{
+  margin-bottom: 20px;
+}
+.mail{
+  margin-bottom: 20px;
+}
+.lastname{
+  margin-bottom: 20px;
+}
+.Number{
+  margin-bottom: 20px;
+}
+.gender{
+  margin-bottom: 20px;
+}
+.dateofbirth{
+  margin-bottom: 20px;
+}
+.add{
+  margin-bottom: 20px;
+}
+.coun{
+  margin-bottom: 20px;
+}
+.checkbox{
+  margin-bottom: 20px;
+}
