@@ -249,3 +249,8 @@
   .form-label {
     margin-top: 15px;
   }
+
+  .btn-sm {
+    margin-bottom: 7px;
+    width: 65px;
+  }

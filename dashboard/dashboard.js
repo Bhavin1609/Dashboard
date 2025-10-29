@@ -1,16 +1,31 @@
+let editIndex = null;
+let modal = null; // ✅ Global modal variable
+
 document.addEventListener("DOMContentLoaded", function () {
   const addBtn = document.getElementById('addbtn');
   const myModalEl = document.getElementById('mymodal');
-  const modal = new bootstrap.Modal(myModalEl);
+
+  // ✅ Initialize modal once
+  modal = new bootstrap.Modal(myModalEl);
 
   addBtn.addEventListener('click', function () {
-    modal.show();
+    editIndex = null;
+
+    // Clear form inputs
+    document.getElementById('frtname').value = '';
+    document.getElementById('lstname').value = '';
+    document.getElementById('eml').value = '';
+    document.getElementById('course').value = '';
+    document.getElementById('db').value = '';
+    document.querySelectorAll('input[name="gender"]').forEach(input => input.checked = false);
+    document.getElementById('address').value = '';
+    document.getElementById('phone').value = '';
+
+    modal.show(); // ✅ Show modal
   });
 
-  loadData();
+  refreshTable();
 });
-      
-
 
 function validateFirstName() {
   const firstname = document.getElementById('frtname').value.trim();
@@ -65,15 +80,27 @@ function validateCourse() {
 }
 
 function validateDOB() {
-  const dob = document.getElementById('db').value.trim();
+  const dobInput = document.getElementById('db').value.trim();
   const error = document.getElementById('n5');
-  if (dob === '') {
+
+  if (dobInput === '') {
     error.textContent = 'Please enter date of birth';
     return false;
-  } else {
-    error.textContent = '';
-    return true;
   }
+
+  const dob = new Date(dobInput);
+  const today = new Date();
+
+  dob.setHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+
+  if (dob > today) {
+    error.textContent = 'Birth date cannot be Valid';
+    return false;
+  }
+
+  error.textContent = '';
+  return true;
 }
 
 function validateGender() {
@@ -125,7 +152,6 @@ document.getElementsByName('gender').forEach(radio => radio.addEventListener('ch
 document.getElementById('address').addEventListener('input', validateAddress);
 document.getElementById('phone').addEventListener('input', validatePhone);
 
-
 function saveData() {
   const isValid =
     validateFirstName() &&
@@ -151,14 +177,20 @@ function saveData() {
   };
 
   let students = JSON.parse(localStorage.getItem('students')) || [];
-  students.unshift(newData);
-  localStorage.setItem('students', JSON.stringify(students));
 
+  if (editIndex !== null) {
+    students[editIndex] = newData;
+    editIndex = null;
+  } else {
+    students.unshift(newData);
+  }
+
+  localStorage.setItem('students', JSON.stringify(students));
   refreshTable();
 
-  const modal = bootstrap.Modal.getInstance(document.getElementById('mymodal'));
-  modal.hide();
+  modal.hide(); // ✅ Use the global modal instance to hide
 
+  // Clear form
   document.getElementById('frtname').value = '';
   document.getElementById('lstname').value = '';
   document.getElementById('eml').value = '';
@@ -167,34 +199,6 @@ function saveData() {
   document.querySelectorAll('input[name="gender"]').forEach(input => input.checked = false);
   document.getElementById('address').value = '';
   document.getElementById('phone').value = '';
-}
-
-
-function addRowToTable(data) {
-  let tableBody = document.querySelector(".stdata tbody");
-  let newRow = tableBody.insertRow(0);
-
-  const values = [
-    data.firstname,
-    data.lastname,
-    data.email,
-    data.field,
-    data.dob,
-    data.gender,
-    data.address,
-    data.phone
-  ];
-
-  values.forEach(value => {
-    let cell = newRow.insertCell();
-    cell.textContent = value;
-  });
-}
-
-
-function loadData() {
-  const students = JSON.parse(localStorage.getItem('students')) || [];
-  students.forEach(student => addRowToTable(student));
 }
 
 function addRowToTable(data, index) {
@@ -218,6 +222,17 @@ function addRowToTable(data, index) {
   });
 
   const actionCell = newRow.insertCell();
+
+  const updateBtn = document.createElement("button");
+  updateBtn.className = "btn btn-success btn-sm me-2";
+  updateBtn.textContent = "Update";
+  updateBtn.onclick = function () {
+    editIndex = index;
+    loadFormForEdit(data);
+    modal.show(); // ✅ Reuse the modal
+  };
+  actionCell.appendChild(updateBtn);
+
   const deleteBtn = document.createElement("button");
   deleteBtn.className = "btn btn-danger btn-sm";
   deleteBtn.textContent = "Delete";
@@ -226,106 +241,39 @@ function addRowToTable(data, index) {
   };
   actionCell.appendChild(deleteBtn);
 }
+
+function loadFormForEdit(data) {
+  document.getElementById('frtname').value = data.firstname;
+  document.getElementById('lstname').value = data.lastname;
+  document.getElementById('eml').value = data.email;
+  document.getElementById('course').value = data.field;
+  document.getElementById('db').value = data.dob;
+  document.querySelectorAll('input[name="gender"]').forEach(input => {
+    input.checked = input.value === data.gender;
+  });
+  document.getElementById('address').value = data.address;
+  document.getElementById('phone').value = data.phone;
+}
+
 function deleteStudent(index) {
   if (confirm("Are you sure you want to delete this record?")) {
     let students = JSON.parse(localStorage.getItem("students")) || [];
 
     if (index >= 0 && index < students.length) {
-      students.splice(index, 1); 
+      students.splice(index, 1);
       localStorage.setItem("students", JSON.stringify(students));
       refreshTable();
     }
   }
 }
+
 function refreshTable() {
   const tableBody = document.querySelector(".stdata tbody");
-  tableBody.innerHTML = ""; 
+  tableBody.innerHTML = "";
 
   const students = JSON.parse(localStorage.getItem("students")) || [];
   students.forEach((student, index) => {
     addRowToTable(student, index);
   });
 }
-function loadData() {
-  refreshTable();
-}
-refreshTable();
-
-function addRowToTable(data , index){
-  const tablebpody = document.querySelector(".stdata tbody");
-  const newRow = tableBody.insertRow();
-}
-const values = [
-   data.firstname,
-  data.lastname,
-  data.email,
-  data.field,
-  data.dob,
-  data.gender,
-  data.address,
-  data.phone
-];
-
-value.forEach(value => {
-  const cell = newRow.insertCell();
-  cell.textContent = value;
-});
-const actionCell = newRow.insertCell();
-
-const updateBtn = document.createElement("button");
-updateBtn.className = "btn btn-warning btn-sm me-2";
-updateBtn.textContent = " update";
-updateBtn.onclick = function () {
-  editIndex = index;
-  loadFormForEdit(data);
-  const modal = new bootstrap.Modal(document.getElementById('mymoda'));
-  modal.show();
-};
-actionCell.appendChild(updateBtn);
-
-const deletebtn = document.createElement("button");
-deletebtn.className = "btn btn-danger btn-sm";
-deletebtn.textContent = "Delete";
-deletebtn.onclick = function (){
-  deleteStudent (index);
-};
-actionCell.appendChild(deletebtn);
-}
- function loadFormForEdit(data) {
-  document.getElementById('frtname').value = data.firstname;
-  document.getElementById('lstname').value = data.lastname;
-  document .getElementById('eml').value = data.email;
-  document.getElementById('course').value = data.field;
-  document.getElementById('db').value = data.dob;
-  document.getElementById('input[name="gender"]').forEach(input => {
-    input.checked = input.value === data.gender;
-  });
-  document.getElementById('address').value = data.address;
-  document.getElementById('phone').value = data.phone;
- }
- function saveData() {
-  const isValid =
-  validateFirstName() &&
-  validateLastName() &&
-  validateEmail() &&
-  validateCourse() &&
-  validateDOB() &&
-  validategender() &&
-  validateaddress() &&
-  validatePhone();
-
-  if(!isValid)return;
-
-  const newData = {
-    firstname = .document.getElementById('frtname').value.trim();
-    lastname = document.getElementById('lstname').value.trim();
-    email = document.getElementById('eml').value.trim().toLowerCase();
-    field = document.getElementById('course').value.trim();
-    dob = document.getElementById('db').value.trim();
-    gender = document.getElementById('input[name="gender"]:checked').value.trim();
-    address = document.getElementById('address').value.trim();
-    phone = document.getElementById('phone').value.trim();
-  }
- }
-
 
